@@ -1,0 +1,86 @@
+ @startuml "Order taking classes"
+
+class Order {
+    orderId: Guid
+    TotalTax : Decimal
+    OrderItems: List<OrderItem>
+    CustomerId : Guid
+    Decimal TotalAmount()
+    Decimal TotalTax()
+}
+
+class OrderItem {
+   orderItemId : Guid
+   Quantity : Integer
+   UnitPrice : Decimal
+   UnitTax : Decimal
+   Decimal TotalTax()
+   Decimal TotalPrice()
+   ProductId : Guid
+}
+
+class Product {
+    ProductId : Guid
+    Name : String
+    Price : Decimal
+    Tax : Decimal
+    ImagePath : String
+}
+
+class Payment {
+    PaymentId : Guid
+    PaymentStatus : PaymentStatus
+    PaymentType : PaymentType
+    PaymentAmount : Decimal
+    orderId : Guid
+    Void Pay(nameoncard, creditcardnumber, expirationdate, cvv)
+}
+
+enum PaymentType {
+    creditCard
+    cash
+}
+
+enum PaymentStatus {
+    inProgress
+    paid
+}
+
+class Customer {
+    CustomerId : Guid
+    Name: String
+    Address : Address
+}
+
+class Address {
+    StreetLine1 : String
+    StreetLine2 : String
+    Zip : Zip
+    City : City
+    State : State
+    Country : Country
+}
+
+class Zip {
+    Code : Integer
+}
+
+enum City {
+    
+}
+
+enum State {
+     
+}
+
+Order "1" *-- "n" OrderItem
+OrderItem "0"-- Product
+Payment "0"-- Order
+Order "0"-- Customer
+Customer *-- Address
+Address *-- City
+Address *-- Zip
+Address *-- State
+Payment "0"-- PaymentType
+Payment "0"-- PaymentStatus
+@enduml

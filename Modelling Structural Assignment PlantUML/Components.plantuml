@@ -1,0 +1,5 @@
+@startuml Order taking
+[Orders] ..> [Menu] : use
+[Orders] ..> [Payments] :  use
+[Customers] ..> [Orders] :  use
+@enduml
